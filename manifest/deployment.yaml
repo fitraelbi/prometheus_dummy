@@ -34,7 +34,7 @@ spec:
       #   utility: "true"
       containers:
         - name: prometheus-dummy
-          image: fitrakz/prometheus_dummy:0.0.3
+          image: fitrakz/prometheus_dummy:0.0.4
           imagePullPolicy: "Always"
   replicas: 1
   selector:
