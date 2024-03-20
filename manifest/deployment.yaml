@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-dummy
+spec:
+  selector:
+    app: prometheus-dummy
+    type: backend
+  type: ClusterIP
+  ports:
+    - port: 80
+      name: web
+      targetPort: 8001
+    - port: 8000
+      name: metrics
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-dummy
+  labels:
+    app: prometheus-dummy
+    type: backend
+spec:
+  template:
+    metadata:
+      name: prometheus-dummy
+      labels:
+        app: prometheus-dummy
+        type: backend
+    spec:
+      # nodeSelector:
+      #   utility: "true"
+      containers:
+        - name: prometheus-dummy
+          image: fitrakz/prometheus_dummy:0.0.1
+          imagePullPolicy: "Always"
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
